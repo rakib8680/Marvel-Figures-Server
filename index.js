@@ -79,8 +79,8 @@ async function run() {
         })
 
         // patch toys 
-        app.patch('/editToy/:id', async (req, res) => {
-            const id = req.params.i
+        app.patch('/allToys/:id', async (req, res) => {
+            const id = req.params.id;
             const filter = { _id: new ObjectId(id) };
             const body = req.body;
             const updateToy = {
