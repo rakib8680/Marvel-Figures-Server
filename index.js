@@ -51,6 +51,16 @@ async function run() {
             res.send(result)
         });
 
+        // get use specific data 
+        app.get('/myToys', async (req, res) => {
+            let query = {};
+            if (req.query?.email) {
+                query = { sellerEmail: req.query.email }
+            }
+            const result = await toysCollection.find(query).toArray()
+            res.send(result)
+        })
+
 
         // get single toy 
         app.get('/allToys/:id', async (req, res) => {
@@ -62,8 +72,8 @@ async function run() {
 
         // delete toy 
         app.delete('/allToys/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: new ObjectId }
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
             const result = await toysCollection.deleteOne(query);
             res.send(result);
         })
