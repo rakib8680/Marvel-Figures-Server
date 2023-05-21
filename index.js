@@ -63,9 +63,19 @@ async function run() {
 
         // get user specific data 
         app.get('/myToys', async (req, res) => {
+            const sortText = req.query.text
             let query = {};
             if (req.query?.email) {
                 query = { sellerEmail: req.query.email }
+            }
+            if(sortText =="Price: High To Low"){
+                const result = await toysCollection.find(query).sort({price: -1}).toArray();
+                return res.send(result);
+            }
+            else if(sortText =="Price: Low To High"){
+                const result = await toysCollection.find(query).sort({price: 1}).toArray();
+                return res.send(result);
+
             }
             const result = await toysCollection.find(query).toArray()
             res.send(result)
