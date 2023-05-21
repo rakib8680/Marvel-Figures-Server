@@ -51,7 +51,17 @@ async function run() {
             res.send(result)
         });
 
-        // get use specific data 
+        // get data by category 
+        app.get('/targetToys/:category', async (req, res) => {
+            if (req.params.category == 'avengers' || req.params.category == 'guardians' || req.params.category == 'fantasticFour') {
+                const result = await toysCollection.find({ subCategory: req.params.category }).toArray();
+                return res.send(result);
+            }
+            const result = await toysCollection.find().toArray()
+            res.send(result)
+        })
+
+        // get user specific data 
         app.get('/myToys', async (req, res) => {
             let query = {};
             if (req.query?.email) {
