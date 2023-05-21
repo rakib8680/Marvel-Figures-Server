@@ -10,6 +10,12 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 // middleware 
 app.use(express.json());
 app.use(cors());
+// const corsConfig = {
+//     origin: '*',
+//     Credentials: true,
+//     methods:['GET','POST','PATCH','DELETE']
+// }
+// app.use(cors(corsConfig))
 
 
 app.get('/', (req, res) => {
@@ -68,12 +74,12 @@ async function run() {
             if (req.query?.email) {
                 query = { sellerEmail: req.query.email }
             }
-            if(sortText =="Price: High To Low"){
-                const result = await toysCollection.find(query).sort({price: -1}).toArray();
+            if (sortText == "Price: High To Low") {
+                const result = await toysCollection.find(query).sort({ price: -1 }).toArray();
                 return res.send(result);
             }
-            else if(sortText =="Price: Low To High"){
-                const result = await toysCollection.find(query).sort({price: 1}).toArray();
+            else if (sortText == "Price: Low To High") {
+                const result = await toysCollection.find(query).sort({ price: 1 }).toArray();
                 return res.send(result);
 
             }
